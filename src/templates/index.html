@@ -7,23 +7,25 @@
 </head>
 <body>
     <h1>Upload Audio</h1>
-    <input type="file" id="audioInput">
+    <input type="file" id="audioInput" multiple>
     <button onclick="uploadAudio()">Upload</button>
 
     <script>
         function uploadAudio() {
+            const formData = new FormData();
             const fileInput = document.getElementById('audioInput');
-            const file = fileInput.files[0];
+            const files = fileInput.files;
             
-            if (!file) {
+            if (!files.length) { 
                 alert('Please select an audio file.');
                 return;
             }
-
-            const formData = new FormData();
-            formData.append('file', file);
-
-            fetch('/upload-file', {
+    
+            for (const file of files) {
+                formData.append('files', file);
+            }
+            
+            fetch('/uploadfiles', {
                 method: 'POST',
                 body: formData
             })
