@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Audio</title>
+</head>
+<body>
+    <h1>Upload Audio</h1>
+    <input type="file" id="audioInput">
+    <button onclick="uploadAudio()">Upload</button>
+
+    <script>
+        function uploadAudio() {
+            const fileInput = document.getElementById('audioInput');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('Please select an audio file.');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('/upload-file', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Response:', data);
+                alert('Audio file uploaded successfully.');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error uploading audio file.');
+            });
+        }
+    </script>
+</body>
+</html>
