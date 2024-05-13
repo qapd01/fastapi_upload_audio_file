@@ -1,4 +1,8 @@
-#install poetry
+# install poetry
+```sh
 poetry install
-#run dev
+```
+# run dev
+```sh
 poetry run fastapi dev
+```
